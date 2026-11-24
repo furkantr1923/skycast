@@ -126,7 +126,13 @@ class AppController extends ChangeNotifier {
       final f = await fFuture;
       if (id != _requestId) return;
       forecast = Load.ready(f);
-      indicators = alertEngine.evaluate(f, p.name);
+      try {
+        indicators = alertEngine.evaluate(f, p.name);
+      } catch (e) {
+        // Gösterge hesabındaki bir sorun tahminin gösterilmesini engellemez.
+        debugPrint('Uyarı göstergeleri hesaplanamadı: $e');
+        indicators = const [];
+      }
     } catch (e) {
       if (id != _requestId) return;
       forecast = Load.error(AppFailure.from(e));

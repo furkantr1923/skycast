@@ -19,7 +19,7 @@ class AirScreen extends StatelessWidget {
     final aq = a.data;
     if (aq == null) return const LoadingView(label: 'Hava kalitesi alınıyor…');
     final v = scale == AqiScale.european ? aq.europeanAqi : aq.usAqi;
-    final steps = scale == AqiScale.european ? [10.0, 30, 50, 70, 90, 110] : [25.0, 75, 125, 175, 250, 350];
+    final steps = scale == AqiScale.european ? <double>[10, 30, 50, 70, 90, 110] : <double>[25, 75, 125, 175, 250, 350];
     final stale = DateTime.now().difference(aq.fetchedAt) > const Duration(hours: 2);
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),

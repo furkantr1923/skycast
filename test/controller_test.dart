@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:skycast/core/failure.dart';
 import 'package:skycast/data/providers/meteoalarm.dart';
 import 'package:skycast/data/providers/open_meteo_air.dart';
@@ -37,6 +38,7 @@ class NoAlarm extends MeteoAlarmProvider {
 }
 
 void main() {
+  setUpAll(() => initializeDateFormatting('tr_TR'));
   const p = Place(name: 'İstanbul', latitude: 41, longitude: 29, countryCode: 'TR');
 
   AppController make(FakeForecast f) => AppController(

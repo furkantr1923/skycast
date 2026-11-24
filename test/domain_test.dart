@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:skycast/data/providers/open_meteo_air.dart';
 import 'package:skycast/data/providers/open_meteo_forecast.dart';
 import 'package:skycast/data/providers/radar.dart';
@@ -13,6 +14,7 @@ import 'package:skycast/domain/wind.dart';
 import 'fixtures.dart';
 
 void main() {
+  setUpAll(() => initializeDateFormatting('tr_TR'));
   group('Open-Meteo ayrıştırma', () {
     test('16 gün, saatlik seri ve konum saati doğru okunur', () {
       final f = OpenMeteoForecastProvider.parse(forecastJson());
