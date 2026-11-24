@@ -161,13 +161,16 @@ class _Hero extends StatelessWidget {
         children: [
           Text('${Fmt.fullDate(f.clock.now())} · yerel saat ${Fmt.hm(f.clock.now())}', style: Sky.small),
           const SizedBox(height: 14),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(Fmt.temp(cur.temperature), style: Sky.h1),
-              const SizedBox(width: 10),
-              WeatherIcon(code: cur.weatherCode, isDay: cur.isDay, size: 96),
-            ],
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                Text(Fmt.temp(cur.temperature), style: Sky.h1),
+                const SizedBox(width: 10),
+                WeatherIcon(code: cur.weatherCode, isDay: cur.isDay, size: 96),
+              ],
+            ),
           ),
           const SizedBox(height: 6),
           Text(WeatherCode.describe(cur.weatherCode), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
@@ -248,7 +251,7 @@ class _HourlyStrip extends StatelessWidget {
             trailing: TextButton(onPressed: () => ShellNav.of(context).open(Dest.hourly), child: const Text('Tümü')),
           ),
           SizedBox(
-            height: 136,
+            height: 150,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -347,7 +350,7 @@ class _MetricTile extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         onTap: d.onTap == null ? null : () => d.onTap!(context),
         child: SizedBox(
-          height: 96,
+          height: 112,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

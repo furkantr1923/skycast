@@ -118,14 +118,16 @@ class AppController extends ChangeNotifier {
     indicators = const [];
     notifyListeners();
 
-    final fFuture = repo.forecast(p, force: force);
-    final aFuture = repo.air(p, force: force);
-    final oFuture = repo.officialAlerts(p, force: force);
+    // Üç kaynak paralel istenir; her biri kendi hatasını yakalar.
+    final fFuture = _guard(repo.forecast(p, force: force));
+    final aFuture = _guard(repo.air(p, force: force));
+    final oFuture = _guard(repo.officialAlerts(p, force: force));
 
-    try {
-      final f = await fFuture;
-      if (id != _requestId) return;
-      forecast = Load.ready(f);
+    final fl = await fFuture;
+    if (id != _requestId) return;
+    forecast = fl;
+    final f = fl.data;
+    if (f != null) {
       try {
         indicators = alertEngine.evaluate(f, p.name);
       } catch (e) {
@@ -133,28 +135,20 @@ class AppController extends ChangeNotifier {
         debugPrint('Uyarı göstergeleri hesaplanamadı: $e');
         indicators = const [];
       }
-    } catch (e) {
-      if (id != _requestId) return;
-      forecast = Load.error(AppFailure.from(e));
     }
     notifyListeners();
 
-    try {
-      final a = await aFuture;
-      if (id == _requestId) air = Load.ready(a);
-    } catch (e) {
-      if (id == _requestId) air = Load.error(AppFailure.from(e));
-    }
-    try {
-      final o = await oFuture;
-      if (id == _requestId) official = Load.ready(o);
-    } catch (e) {
-      if (id == _requestId) official = Load.error(AppFailure.from(e));
-    }
+    final al = await aFuture;
+    final ol = await oFuture;
     if (id != _requestId) return;
+    air = al;
+    official = ol;
     _recordHistory([...?official.data, ...indicators]);
     notifyListeners();
   }
+
+  static Future<Load<T>> _guard<T>(Future<T> f) =>
+      f.then<Load<T>>((v) => Load.ready(v), onError: (Object e) => Load<T>.error(AppFailure.from(e)));
 
   List<WeatherAlert> get activeAlerts => [...?official.data, ...indicators];
 
@@ -186,10 +180,11 @@ class AppController extends ChangeNotifier {
     await store?.saveFavorites(favorites);
   }
 
+  /// [newIndex], öğe çıkarıldıktan sonraki hedef konumdur.
   Future<void> reorderFavorites(int oldIndex, int newIndex) async {
     final list = [...favorites];
-    if (newIndex > oldIndex) newIndex -= 1;
-    list.insert(newIndex, list.removeAt(oldIndex));
+    final item = list.removeAt(oldIndex);
+    list.insert(newIndex.clamp(0, list.length), item);
     favorites = list;
     notifyListeners();
     await store?.saveFavorites(favorites);

@@ -202,7 +202,7 @@ class _PlaceSearchPanelState extends State<PlaceSearchPanel> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           buildDefaultDragHandles: false,
-          onReorder: c.reorderFavorites,
+          onReorderItem: c.reorderFavorites,
           children: [
             for (var i = 0; i < c.favorites.length; i++)
               ListTile(

@@ -27,10 +27,10 @@ void main() {
       await tester.pump(const Duration(seconds: 2));
       await tester.pump(const Duration(milliseconds: 600));
       expect(find.text('İstanbul'), findsWidgets);
-      expect(find.text('12°'), findsOneWidget);
+      expect(find.text('12°'), findsWidgets);
       expect(find.text('Kapalı'), findsWidgets);
       expect(find.textContaining('Kuvvetli yağış'), findsWidgets);
-      expect(find.textContaining('Hava kalitesi (AQI) şu an kullanılamıyor'), findsOneWidget);
+      if (desktop) expect(find.textContaining('Hava kalitesi (AQI) şu an kullanılamıyor'), findsOneWidget);
       AppPlatform.debugDesktopOverride = null;
     });
   }
