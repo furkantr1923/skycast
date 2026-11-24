@@ -112,12 +112,12 @@ class _SatelliteScreenState extends State<SatelliteScreen> {
       children: [
         baseLayer(),
         for (var i = 0; i < _frames.length; i++)
-          Opacity(
+          if ((i - _index + _frames.length) % _frames.length <= 2)
+            Opacity(
             key: ValueKey('${_layer.id}:${_frames[i].wmsTime}'),
-            opacity: i == _index ? 1.0 : 0.0,
+            opacity: i == _index ? 0.92 : 0.0,
             child: _tileFor(_frames[i]),
           ),
-        labelsLayer(),
         MarkerLayer(markers: [
           if (c.place != null) placeMarker(center),
           if (_tapped != null) placeMarker(_tapped!, color: Sky.warm),
@@ -188,7 +188,7 @@ class _SatelliteScreenState extends State<SatelliteScreen> {
                   subtitle: _layer.description,
                 ),
               const SizedBox(height: 6),
-              MapAttribution('${_layer.attribution} · kapsama: ${_layer.coverage} · © OpenStreetMap · © CARTO'),
+              MapAttribution('${_layer.attribution} · kapsama: ${_layer.coverage}  · © OpenStreetMap katkıcıları'),
             ]),
           ),
         ),

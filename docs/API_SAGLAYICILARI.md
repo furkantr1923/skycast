@@ -20,7 +20,7 @@ ve `WeatherRepository` üzerinden kullanılır. Bir kaynak çökerse yalnızca i
 | Uydu (Meteosat / MTG) | [EUMETSAT EUMETView WMS](https://view.eumetsat.int) | Anahtarsız | EUMETSAT veri politikası, atıf zorunlu | Kapsama: Avrupa, Afrika, Orta Doğu, Atlantik; 10/15 dk adım; 2020'den beri arşiv | "© EUMETSAT" |
 | Uydu (günlük gerçek renk) | [NASA GIBS](https://nasa-gibs.github.io/gibs-api-docs/) (MODIS Terra) | Anahtarsız | NASA açık veri politikası | Günde bir mozaik | "NASA EOSDIS GIBS" |
 | Resmî uyarılar | [MeteoAlarm](https://meteoalarm.org) (EUMETNET) | Anahtarsız | Ulusal servislerin resmî CAP uyarıları | **Türkiye akışta yok (HTTP 404)**; Avrupa'nın 38 ülkesi | "MeteoAlarm" |
-| Altlık harita | [CARTO Basemaps](https://github.com/CartoDB/basemap-styles) (OSM) | Anahtarsız | Ticari olmayan kullanımda ücretsiz; OSM ODbL | Ayda 75.000 görüntüleme | "© OpenStreetMap © CARTO" |
+| Altlık harita | [OpenStreetMap döşemeleri](https://operations.osmfoundation.org/policies/tiles/) | Anahtarsız | Veri ODbL; [döşeme kullanım politikası](https://operations.osmfoundation.org/policies/tiles/) | Yoğun kullanım için değil; tanımlayıcı User-Agent zorunlu, toplu indirme yasak (uygulamada uyulur). Koyu görünüm cihazda renk filtresiyle elde edilir | "© OpenStreetMap katkıcıları" |
 
 ## Gerçek veriyle doğrulama
 
@@ -41,11 +41,14 @@ olarak yazar ve her ekranın görüntüsünü alır. Sonuçlar `builds` dalında
   bulunamadı, MeteoAlarm da Türkiye'yi kapsamıyor. Uygulama bunu açıkça yazar.
   Bunun yerine "Uygulama göstergesi · resmî uyarı değil" etiketli, tahmin
   eşiklerinden hesaplanan göstergeler sunulur.
+- **Altlık harita:** CARTO koyu harita artık API anahtarı istediği için kullanılmadı;
+  anahtarsız OSM döşemeleri cihazda koyulaştırılıyor. Uygulama geniş kitleye
+  dağıtılacaksa kendi döşeme sunucusu ya da anahtarlı bir sağlayıcı önerilir.
 - **Sıcaklık/rüzgâr/basınç/bulut haritaları model verisidir**, gözlem değildir.
   Ücretsiz ve anahtarsız hazır döşeme (tile) katmanı bulunmadığı için bu katmanlar
   Open-Meteo'nun gerçek ızgara değerlerinden cihazda çizilir.
 - **15 günlük tahmin**: Open-Meteo 16 gün veriyor; ilk 15 gün gösterilir.
   1–3. gün yüksek, 4–7. gün orta, 8–15. gün düşük güvenilirlik etiketi taşır.
 - Ücretsiz katmanların çoğu **ticari olmayan** kullanım içindir. Uygulama
-  ticari olarak dağıtılacaksa Open-Meteo, RainViewer ve CARTO koşulları yeniden
+  ticari olarak dağıtılacaksa Open-Meteo, RainViewer ve OSM döşeme koşulları yeniden
   değerlendirilmelidir.

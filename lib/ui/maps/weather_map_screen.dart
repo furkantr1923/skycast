@@ -160,7 +160,6 @@ class _WeatherMapScreenState extends State<WeatherMapScreen> with SingleTickerPr
             imageProvider: MemoryImage(_image!),
           ),
         ]),
-      labelsLayer(),
       if (!_layer.isSatellite && g != null && v != null) MarkerLayer(markers: _valueMarkers(g, v)),
       MarkerLayer(markers: [
         if (c.place != null) placeMarker(center),
@@ -262,9 +261,9 @@ class _WeatherMapScreenState extends State<WeatherMapScreen> with SingleTickerPr
   }
 
   String _attribution(GridField? g) {
-    if (_layer.isSatellite) return '© EUMETSAT · © OpenStreetMap · © CARTO';
+    if (_layer.isSatellite) return '© EUMETSAT  · © OpenStreetMap katkıcıları';
     final t = g == null ? '' : ' · model ${Fmt.hm(g.time.toLocal())}';
-    return 'Open-Meteo$t · © OpenStreetMap · © CARTO';
+    return 'Open-Meteo$t  · © OpenStreetMap katkıcıları';
   }
 
   List<Marker> _valueMarkers(GridField g, GridVariable v) {

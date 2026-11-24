@@ -21,21 +21,27 @@ import '../widgets/weather_icon.dart';
 
 const kUserAgentPackage = 'com.furkan.skycast';
 
-/// CARTO koyu altlık (etiketsiz). Veri katmanları bunun üstüne çizilir.
-TileLayer baseLayer() => TileLayer(
-      urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-      subdomains: const ['a', 'b', 'c', 'd'],
-      userAgentPackageName: kUserAgentPackage,
-      maxNativeZoom: 18,
+/// Altlık harita: OpenStreetMap standart döşemeleri (anahtarsız, ODbL).
+/// Koyu temaya uysun diye cihazda renk matrisiyle koyulaştırılır
+/// (ters çevrilmiş parlaklık + lacivert ton). OSM döşeme kullanım politikası
+/// gereği tanımlayıcı User-Agent gönderilir ve toplu indirme yapılmaz.
+const _darkMatrix = ColorFilter.matrix(<double>[
+  -0.0702, -0.2360, -0.0238, 0, 90, //
+  -0.0808, -0.2718, -0.0274, 0, 107,
+  -0.1063, -0.3576, -0.0361, 0, 146,
+  0, 0, 0, 1, 0,
+]);
+
+Widget baseLayer() => ColorFiltered(
+      colorFilter: _darkMatrix,
+      child: TileLayer(
+        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        userAgentPackageName: kUserAgentPackage,
+        maxNativeZoom: 19,
+      ),
     );
 
-/// Şehir/ülke etiketleri: veri katmanlarının ÜSTÜNDE, okunabilirlik için.
-TileLayer labelsLayer() => TileLayer(
-      urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
-      subdomains: const ['a', 'b', 'c', 'd'],
-      userAgentPackageName: kUserAgentPackage,
-      maxNativeZoom: 18,
-    );
+const kBaseAttribution = '© OpenStreetMap katkıcıları';
 
 const kInteraction = InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate);
 

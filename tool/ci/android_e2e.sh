@@ -21,7 +21,17 @@ adb shell am start -W -n $PKG/.MainActivity >> "$REPORT" 2>&1
 sleep 12
 adb exec-out screencap -p > "$OUT/a01_izin_istegi.png"
 if adb shell pidof $PKG > /dev/null; then log "OK   uygulama çalışıyor (izin penceresi)"; else log "FAIL uygulama kapandı"; fi
+# İzni reddet: "Don't allow" düğmesine bas (yoksa Geri tuşu = reddetme).
+adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
+BOUNDS=$(adb shell cat /sdcard/ui.xml 2>/dev/null | tr '>' '\n' | grep -iE "text=\"(Don.t allow|İzin verme)\"" | grep -o 'bounds="[^"]*"' | head -1 | grep -o '[0-9]\+' | tr '\n' ' ')
+if [ -n "$BOUNDS" ]; then set -- $BOUNDS; adb shell input tap $(( ($1+$3)/2 )) $(( ($2+$4)/2 )); log "OK   izin reddedildi (düğme)"; else adb shell input keyevent KEYCODE_BACK; log "OK   izin reddedildi (geri)"; fi
+sleep 6
+adb exec-out screencap -p > "$OUT/a02_izin_reddedildi_sehir_arama.png"
+if adb shell pidof $PKG > /dev/null; then log "OK   izin reddedilince uygulama çalışmaya devam ediyor (şehir arama ekranı)"; else log "FAIL izin reddedilince uygulama kapandı"; fi
 adb shell am force-stop $PKG
+adb shell am force-stop com.google.android.permissioncontroller >/dev/null 2>&1 || true
+adb shell input keyevent KEYCODE_HOME
+adb shell pm clear $PKG >/dev/null 2>&1
 
 log "== 3) İzin verilmiş + GPS konumu (İstanbul) ile açılış"
 adb emu geo fix 28.9784 41.0082 || true
@@ -31,7 +41,7 @@ adb shell appops set $PKG android:mock_location allow >/dev/null 2>&1 || true
 START=$(date +%s%3N)
 adb shell am start -W -n $PKG/.MainActivity | tee -a "$REPORT"
 sleep 25
-adb exec-out screencap -p > "$OUT/a02_gps_panel.png"
+adb exec-out screencap -p > "$OUT/a03_gps_panel.png"
 if adb shell pidof $PKG > /dev/null; then log "OK   GPS ile açılış: uygulama çalışıyor"; else log "FAIL GPS açılışında uygulama kapandı"; fi
 adb shell dumpsys meminfo $PKG | grep -E "TOTAL PSS|TOTAL RSS|TOTAL:" | head -3 | sed 's/^/BELLEK /' | tee -a "$REPORT"
 adb shell top -b -n 1 | grep $PKG | head -1 | sed 's/^/CPU /' | tee -a "$REPORT"

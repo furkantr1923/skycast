@@ -23,7 +23,7 @@ class AboutContent extends StatelessWidget {
     ('Uydu (Meteosat / MTG)', '© EUMETSAT · EUMETView', 'https://view.eumetsat.int'),
     ('Uydu (günlük gerçek renk)', 'NASA EOSDIS GIBS', 'https://earthdata.nasa.gov/gibs'),
     ('Resmî uyarılar (Avrupa)', 'MeteoAlarm / EUMETNET', 'https://meteoalarm.org'),
-    ('Altlık harita', '© OpenStreetMap katkıcıları · © CARTO', 'https://www.openstreetmap.org/copyright'),
+    ('Altlık harita', '© OpenStreetMap katkıcıları · ODbL', 'https://www.openstreetmap.org/copyright'),
     ('Şehir arama', 'GeoNames · Open-Meteo Geocoding', 'https://open-meteo.com/en/docs/geocoding-api'),
     ('Konum adı', 'OpenStreetMap Nominatim · ODbL', 'https://nominatim.org'),
   ];

@@ -13,7 +13,10 @@ import '../data/providers/open_meteo_forecast.dart';
 import '../data/providers/satellite.dart';
 import '../domain/place.dart';
 import '../state/app_controller.dart';
+import 'package:latlong2/latlong.dart' show LatLng;
+
 import '../ui/maps/weather_map_screen.dart';
+import '../ui/screens/radar_screen.dart';
 import '../ui/shell.dart';
 
 /// Öz-sınama ve ekran görüntüsü modu ayarları.
@@ -85,7 +88,9 @@ class CaptureRunner {
         _open(Dest.maps);
       }, 6),
       ('radar', () => _open(Dest.radar), 10),
-      ('uydu', () => _open(Dest.satellite), 12),
+      // Türkiye'de radar kapsamı sınırlı; kapsamı olan Orta Avrupa da gösterilir.
+      ('radar_avrupa', () => RadarScreen.requestedCenter.value = (const LatLng(50.5, 10.5), 5.0), 9),
+      ('uydu', () => _open(Dest.satellite), 16),
       if (!desktop) ('ruzgar', () => _open(Dest.wind), 2),
       if (!desktop) ('hava_kalitesi', () => _open(Dest.air), 2),
       ('uyarilar', () => _open(Dest.alerts), 2),
@@ -231,8 +236,8 @@ class CaptureRunner {
       final n = g.values[GridVariable.temperature]!.whereType<double>().length;
       return '${g.rows}x${g.cols} nokta, $n değer, model ${g.time.toIso8601String()}';
     });
-    await _check('CARTO altlık', () async {
-      final code = await Http.status('https://a.basemaps.cartocdn.com/dark_nolabels/4/9/6.png');
+    await _check('OpenStreetMap altlık', () async {
+      final code = await Http.status('https://tile.openstreetmap.org/4/9/6.png');
       if (code != 200) throw AppFailure(FailureKind.server, detail: 'HTTP $code');
       return 'HTTP $code';
     });

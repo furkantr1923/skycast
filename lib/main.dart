@@ -15,6 +15,10 @@ import 'ui/shell.dart';
 /// görüntülerini alır ve rapor yazar. Normal kullanımda bu kod çalışmaz.
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Harita döşemeleri için çözülmüş görüntü önbelleğini sınırla (düşük bellek).
+  PaintingBinding.instance.imageCache
+    ..maximumSizeBytes = 96 << 20
+    ..maximumSize = 400;
   await initializeDateFormatting('tr_TR');
 
   final capture = CaptureConfig.fromArgs(args);

@@ -21,6 +21,9 @@ class RadarScreen extends StatefulWidget {
   const RadarScreen({super.key, this.embedded = false});
   final bool embedded;
 
+  /// Haritayı belirli bir noktaya taşımak için (ör. öz-sınamada radar kapsamı olan bölge).
+  static final requestedCenter = ValueNotifier<(LatLng, double)?>(null);
+
   @override
   State<RadarScreen> createState() => _RadarScreenState();
 }
@@ -36,7 +39,21 @@ class _RadarScreenState extends State<RadarScreen> {
   @override
   void initState() {
     super.initState();
+    RadarScreen.requestedCenter.addListener(_onCenter);
     WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  void _onCenter() {
+    final r = RadarScreen.requestedCenter.value;
+    if (r == null) return;
+    _map.move(r.$1, r.$2);
+    RadarScreen.requestedCenter.value = null;
+  }
+
+  @override
+  void dispose() {
+    RadarScreen.requestedCenter.removeListener(_onCenter);
+    super.dispose();
   }
 
   Future<void> _load({bool force = false}) async {
@@ -59,6 +76,11 @@ class _RadarScreenState extends State<RadarScreen> {
     }
   }
 
+  bool _inWindow(int i, int n) {
+    final d = (i - _index + n) % n;
+    return d <= 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = AppScope.of(context);
@@ -69,7 +91,7 @@ class _RadarScreenState extends State<RadarScreen> {
       mapController: _map,
       options: MapOptions(
         initialCenter: center,
-        initialZoom: 6,
+        initialZoom: 5.5,
         minZoom: 2,
         maxZoom: 10,
         interactionOptions: kInteraction,
@@ -83,8 +105,9 @@ class _RadarScreenState extends State<RadarScreen> {
         baseLayer(),
         if (s != null)
           for (var i = 0; i < s.frames.length; i++)
-            // Tüm kareler önceden yüklenir; yalnızca seçili kare görünür (titremesiz animasyon).
-            Opacity(
+            // Seçili kare ile sonraki iki kare önceden yüklenir (titremesiz animasyon,
+            // düşük bellek); diğer kareler ağaçta tutulmaz.
+            if (_inWindow(i, s.frames.length)) Opacity(
               key: ValueKey(s.frames[i].tileUrl),
               opacity: i == _index ? 0.85 : 0.0,
               child: TileLayer(
@@ -94,7 +117,6 @@ class _RadarScreenState extends State<RadarScreen> {
                 tileDisplay: const TileDisplay.instantaneous(),
               ),
             ),
-        labelsLayer(),
         MarkerLayer(markers: [
           if (c.place != null) placeMarker(center),
           if (_tapped != null) placeMarker(_tapped!, color: Sky.warm),
@@ -163,7 +185,7 @@ class _RadarScreenState extends State<RadarScreen> {
                   subtitle: 'Saatler cihaz saatinizle gösterilir · tarama tarihi ${Fmt.dayMonth(s.frames[_index].time.toLocal())}',
                 ),
                 const SizedBox(height: 6),
-                const MapAttribution('Radar: RainViewer.com · ücretsiz katmanda en fazla 7. yakınlaştırma · © OpenStreetMap · © CARTO'),
+                const MapAttribution('Radar: RainViewer.com · ücretsiz katmanda en fazla 7. yakınlaştırma  · © OpenStreetMap katkıcıları'),
                 const SizedBox(height: 4),
                 const MapAttribution('Radar kapsaması ülkelerin paylaştığı veriye bağlıdır; bazı bölgelerde radar verisi bulunmayabilir.'),
               ],

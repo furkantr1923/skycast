@@ -349,9 +349,10 @@ class _MetricTile extends StatelessWidget {
   Widget build(BuildContext context) => GlassCard(
         padding: const EdgeInsets.all(14),
         onTap: d.onTap == null ? null : () => d.onTap!(context),
-        child: SizedBox(
-          height: 112,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 108),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
@@ -360,7 +361,7 @@ class _MetricTile extends StatelessWidget {
                 Expanded(child: Text(d.label, style: Sky.small)),
                 if (d.dir != null) WindArrow(degrees: d.dir, size: 18),
               ]),
-              const Spacer(),
+              const SizedBox(height: 14),
               Text(d.value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
               const SizedBox(height: 4),
               Text(d.hint, style: Sky.tiny, maxLines: 2, overflow: TextOverflow.ellipsis),
