@@ -1,0 +1,54 @@
+name: skycast
+description: "SKYCAST — Türkçe, koyu temalı, ücretsiz ve açık veri kaynaklarıyla çalışan hava durumu uygulaması (Android + Windows)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # HTTP istemcisi: zaman aşımı, iptal ve hata türlerini ayırt etmek için.
+  dio: ^5.8.0
+  # Harita: OSM tabanlı, anahtar gerektirmeyen döşeme (tile) ve WMS desteği.
+  flutter_map: ^8.1.1
+  latlong2: ^0.9.1
+  # Etkileşimli grafikler.
+  fl_chart: ^1.0.0
+  # GPS konumu (Android + Windows).
+  geolocator: ^14.0.2
+  # Favoriler, ayarlar ve uyarı geçmişi için yerel depolama.
+  shared_preferences: ^2.5.3
+  # Kaynak/atıf bağlantılarını tarayıcıda açmak için.
+  url_launcher: ^6.3.1
+  # Türkçe tarih/saat biçimlendirme.
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/brand/
+  fonts:
+    - family: DMSans
+      fonts:
+        - asset: assets/fonts/DMSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/DMSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/DMSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/DMSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/DMSans-Bold.ttf
+          weight: 700
