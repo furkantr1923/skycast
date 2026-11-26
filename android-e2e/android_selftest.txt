@@ -1,0 +1,19 @@
+SKYCAST öz-sınama · 2026-11-26T12:47:03.858064Z · android
+Açılıştan ilk veriye: 642 ms
+--- Veri kaynakları ---
+OK   Open-Meteo tahmin (715 ms): 384 saat, 16 gün, şu an 12.5 °C, Europe/Istanbul
+OK   Open-Meteo hava kalitesi (737 ms): EAQI 43.0, US AQI 154.0, model 2026-11-26 15:00:00.000Z
+OK   Şehir arama (Çorum) (786 ms): 15 sonuç, ilk: Çorum / Çorum
+OK   Ters konum (Nominatim) (870 ms): Çorum Merkez, Çorum, Türkiye
+OK   RainViewer radar (1473 ms): 13 kare (tahmin karesi: 0), son 2026-11-26T12:40:00.000Z, döşeme HTTP 200
+OK   Uydu: Bulut (Kızılötesi) (2661 ms): 13 kare, son 2026-11-26T12:20:00.000Z, görüntü HTTP 200
+OK   Uydu: Renkli görünüm (5283 ms): 13 kare, son 2026-11-26T12:20:00.000Z, görüntü HTTP 200
+OK   Uydu: Meteosat IR 10,8 (2703 ms): 9 kare, son 2026-11-26T12:30:00.000Z, görüntü HTTP 200
+OK   Uydu: Gerçek renk (günlük) (533 ms): 10 kare, son 2026-11-25T00:00:00.000Z, görüntü HTTP 200
+OK   MeteoAlarm (Almanya, Berlin) (18300 ms): 1 eşleşen resmî uyarı
+OK   MeteoAlarm (Türkiye) (0 ms): kapsam dışı (beklenen) → uygulama bunu açıkça belirtir
+OK   Harita ızgarası (Türkiye) (635 ms): 7x9 nokta, 63 değer, model 2026-11-26T12:45:00.000Z
+OK   OpenStreetMap altlık (369 ms): HTTP 200
+Uygulama göstergeleri (İstanbul, 3 gün): 0 adet
+OK   Bağlantı yok davranışı: FailureKind.offline · eski veri gösterilmiyor=true
+Toplam süre: 184 sn

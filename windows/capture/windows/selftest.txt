@@ -1,0 +1,34 @@
+SKYCAST öz-sınama · 2026-11-26T12:41:25.450857Z · windows
+Açılıştan ilk veriye: 957 ms
+EKRAN 01_panel kaydedildi
+EKRAN 02_saatlik kaydedildi
+EKRAN 03_gunluk_15 kaydedildi
+EKRAN 04_grafikler kaydedildi
+EKRAN 05_harita_sicaklik kaydedildi
+EKRAN 06_harita_ruzgar kaydedildi
+EKRAN 07_harita_yagis kaydedildi
+EKRAN 08_radar kaydedildi
+EKRAN 09_radar_avrupa kaydedildi
+EKRAN 10_uydu kaydedildi
+EKRAN 11_uyarilar kaydedildi
+EKRAN 12_konumlar kaydedildi
+EKRAN 13_ayarlar kaydedildi
+--- Veri kaynakları ---
+OK   Open-Meteo tahmin (120 ms): 384 saat, 16 gün, şu an 12.5 °C, Europe/Istanbul
+OK   Open-Meteo hava kalitesi (563 ms): EAQI 43.0, US AQI 154.0, model 2026-11-26 15:00:00.000Z
+OK   Şehir arama (Çorum) (668 ms): 15 sonuç, ilk: Çorum / Çorum
+OK   Ters konum (Nominatim) (535 ms): Çorum Merkez, Çorum, Türkiye
+OK   RainViewer radar (889 ms): 13 kare (tahmin karesi: 0), son 2026-11-26T12:40:00.000Z, döşeme HTTP 200
+OK   Uydu: Bulut (Kızılötesi) (1038 ms): 13 kare, son 2026-11-26T12:20:00.000Z, görüntü HTTP 200
+OK   Uydu: Renkli görünüm (653 ms): 13 kare, son 2026-11-26T12:10:00.000Z, görüntü HTTP 200
+OK   Uydu: Meteosat IR 10,8 (334 ms): 9 kare, son 2026-11-26T12:15:00.000Z, görüntü HTTP 200
+OK   Uydu: Gerçek renk (günlük) (273 ms): 10 kare, son 2026-11-25T00:00:00.000Z, görüntü HTTP 200
+OK   MeteoAlarm (Almanya, Berlin) (27777 ms): 1 eşleşen resmî uyarı
+OK   MeteoAlarm (Türkiye) (0 ms): kapsam dışı (beklenen) → uygulama bunu açıkça belirtir
+OK   Harita ızgarası (Türkiye) (147 ms): 7x9 nokta, 63 değer, model 2026-11-26T12:30:00.000Z
+OK   OpenStreetMap altlık (59 ms): HTTP 200
+Uygulama göstergeleri (İstanbul, 3 gün): 0 adet
+OK   Bağlantı yok davranışı: FailureKind.offline · eski veri gösterilmiyor=true
+EKRAN 14_baglanti_yok kaydedildi
+Toplam süre: 115 sn
+Windows çalışma süresi: 118 sn · en yüksek bellek (WorkingSet): 480 MB · çıkış kodu: 0

@@ -1,0 +1,78 @@
+== 1) Sürüm APK kurulumu
+Performing Streamed Install
+Success
+OK   APK kuruldu
+    versionName=1.0.0
+    requested permissions:
+      android.permission.INTERNET
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.INTERNET: granted=true
+        android.permission.ACCESS_FINE_LOCATION: granted=false
+        android.permission.ACCESS_COARSE_LOCATION: granted=false
+== 2) Konum izni akışı: önce izin VERİLMEDEN açılış
+Starting: Intent { cmp=com.furkan.skycast/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.furkan.skycast/.MainActivity
+TotalTime: 2515
+WaitTime: 2539
+Complete
+OK   uygulama çalışıyor (izin penceresi)
+OK   izin reddedildi (düğme)
+OK   izin reddedilince uygulama çalışmaya devam ediyor (şehir arama ekranı)
+== 3) İzin verilmiş + GPS konumu (İstanbul) ile açılış
+Starting: Intent { cmp=com.furkan.skycast/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.furkan.skycast/.MainActivity
+TotalTime: 14840
+WaitTime: 14876
+Complete
+OK   GPS ile açılış: uygulama çalışıyor
+BELLEK            TOTAL PSS:    83225            TOTAL RSS:   182492       TOTAL SWAP PSS:      251
+CPU  5015 u0_a192      10 -10  17G 173M  99M S  0.0   6.9   0:06.88 com.furkan.skycast
+--------- beginning of main
+11-26 12:45:50.416  2776  2879 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(105)] Using the Impeller rendering backend (OpenGLES).
+11-26 12:46:32.070  5015  5047 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(105)] Using the Impeller rendering backend (OpenGLES).
+== 4) Öz-sınama APK'sı: tüm ekranlar gerçek veriyle
+Performing Streamed Install
+Success
+EKRAN 01_panel
+EKRAN 02_saatlik
+EKRAN 03_gunluk_15
+EKRAN 04_grafikler
+EKRAN 05_harita_sicaklik
+EKRAN 06_harita_ruzgar
+EKRAN 07_harita_yagis
+EKRAN 08_radar
+EKRAN 09_radar_avrupa
+EKRAN 10_uydu
+EKRAN 11_ruzgar
+EKRAN 12_hava_kalitesi
+EKRAN 13_uyarilar
+EKRAN 14_konumlar
+EKRAN 15_daha_fazla
+EKRAN 16_ayarlar
+EKRAN 17_hakkinda
+EKRAN 18_baglanti_yok
+SKYCAST öz-sınama · 2026-11-26T12:47:03.858064Z · android
+Açılıştan ilk veriye: 642 ms
+--- Veri kaynakları ---
+OK   Open-Meteo tahmin (715 ms): 384 saat, 16 gün, şu an 12.5 °C, Europe/Istanbul
+OK   Open-Meteo hava kalitesi (737 ms): EAQI 43.0, US AQI 154.0, model 2026-11-26 15:00:00.000Z
+OK   Şehir arama (Çorum) (786 ms): 15 sonuç, ilk: Çorum / Çorum
+OK   Ters konum (Nominatim) (870 ms): Çorum Merkez, Çorum, Türkiye
+OK   RainViewer radar (1473 ms): 13 kare (tahmin karesi: 0), son 2026-11-26T12:40:00.000Z, döşeme HTTP 200
+OK   Uydu: Bulut (Kızılötesi) (2661 ms): 13 kare, son 2026-11-26T12:20:00.000Z, görüntü HTTP 200
+OK   Uydu: Renkli görünüm (5283 ms): 13 kare, son 2026-11-26T12:20:00.000Z, görüntü HTTP 200
+OK   Uydu: Meteosat IR 10,8 (2703 ms): 9 kare, son 2026-11-26T12:30:00.000Z, görüntü HTTP 200
+OK   Uydu: Gerçek renk (günlük) (533 ms): 10 kare, son 2026-11-25T00:00:00.000Z, görüntü HTTP 200
+OK   MeteoAlarm (Almanya, Berlin) (18300 ms): 1 eşleşen resmî uyarı
+OK   MeteoAlarm (Türkiye) (0 ms): kapsam dışı (beklenen) → uygulama bunu açıkça belirtir
+OK   Harita ızgarası (Türkiye) (635 ms): 7x9 nokta, 63 değer, model 2026-11-26T12:45:00.000Z
+OK   OpenStreetMap altlık (369 ms): HTTP 200
+Uygulama göstergeleri (İstanbul, 3 gün): 0 adet
+OK   Bağlantı yok davranışı: FailureKind.offline · eski veri gösterilmiyor=true
+Toplam süre: 184 sn
+OK   öz-sınama sonunda uygulama hâlâ çalışıyor
