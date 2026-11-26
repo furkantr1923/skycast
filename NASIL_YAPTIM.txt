@@ -1,0 +1,89 @@
+SKYCAST — NASIL YAPTIM?
+=======================
+"Bu uygulamayı nasıl yaptın?" sorusuna kısa ve dürüst cevap.
+
+1) NE YAPTIM
+------------
+SKYCAST; Android ve Windows için Türkçe, koyu temalı bir hava durumu uygulaması.
+Anlık durum, saatlik ve 15 günlük tahmin, etkileşimli grafikler, 6 katmanlı
+meteoroloji haritası, animasyonlu yağış radarı, geçmiş karelerle uydu görüntüsü,
+rüzgâr ekranı, AQI, uygulama içi uyarılar ve uyarı geçmişi, GPS, şehir arama ve
+favoriler var. Hesap, reklam, bildirim ve arka plan servisi yok.
+
+2) TEKNOLOJİ
+------------
+- Flutter 3.50 / Dart 3.14: tek kod tabanıyla Android ve Windows.
+- dio (HTTP), flutter_map + latlong2 (harita), fl_chart (grafik),
+  geolocator (GPS), shared_preferences (yerel kayıt), intl (Türkçe tarih).
+- Durum yönetimi: ChangeNotifier tabanlı AppController + Load<T> durum modeli.
+- Hava durumu simgeleri ve atmosferik arka plan CustomPainter ile kodla çizildi.
+- Windows kurulum: Inno Setup. Derleme/test: GitHub Actions.
+
+3) MİMARİ (katmanlı)
+--------------------
+lib/core      -> hata türleri, HTTP, süreli önbellek, Türkçe biçimlendirme
+lib/domain    -> saf modeller: tahmin, Beaufort, AQI, güvenilirlik, uyarı motoru
+lib/data      -> her veri kaynağı ayrı "provider" + tek giriş WeatherRepository
+lib/state     -> AppController (uygulamanın tek durum kaynağı)
+lib/ui        -> Android alt menü / Windows yan menü, ekranlar, haritalar
+lib/capture   -> CI'da gerçek uygulamayı sınayan öz-sınama modu
+Bir kaynak çökerse sadece o özellik "kullanılamıyor" olur, uygulama çalışır.
+
+4) VERİ KAYNAKLARI (hepsi ücretsiz, anahtarsız)
+-----------------------------------------------
+- Open-Meteo: tahmin (16 gün), harita ızgaraları, AQI (CAMS), şehir arama
+- RainViewer: yağış radarı (son ~2 saat, zoom 7'ye kadar)
+- EUMETSAT (Meteosat/MTG) + NASA GIBS: uydu görüntüleri ve geçmiş kareler
+- MeteoAlarm: Avrupa resmî uyarıları
+- OpenStreetMap: altlık harita + yer adı (Nominatim)
+Her kaynağın lisansı ve kotası: docs/API_SAGLAYICILARI.md
+
+5) ÖNEMLİ KARARLAR (sorulursa)
+------------------------------
+- Veri uydurulmuyor. Eksik değer "—" görünür, boş günler doldurulmaz.
+- İnternet yoksa eski veri "güncel" gibi gösterilmiyor; uyarı + "Yeniden dene".
+- Radar "canlı değil" etiketli. Ücretsiz kaynak ileri tahmin vermediği için
+  tahmin karesi gösterilmiyor (simüle edilmiyor).
+- 15 günlük tahminde güven etiketi var: 1-3. gün yüksek, 4-7. gün orta,
+  8-15. gün düşük.
+- MGM'nin açık uyarı API'si yok, MeteoAlarm da Türkiye'yi kapsamıyor. Bu yüzden
+  Türkiye'de "Uygulama göstergesi · resmî uyarı değil" etiketli, tahmin
+  eşiklerinden hesaplanan göstergeler var. Resmî uyarıyla asla karıştırılmıyor.
+- Sıcaklık/rüzgâr/basınç/bulut haritaları için ücretsiz hazır katman yok; bunları
+  Open-Meteo'nun gerçek ızgara verisinden cihazda çizdim.
+- CARTO harita artık API anahtarı istiyordu (testte filigran çıktı); anahtarsız
+  OSM döşemelerine geçip cihazda koyulaştırdım.
+
+6) TEST
+-------
+- Birim + arayüz testleri: ayrıştırma, saat dilimi, Beaufort, AQI, uyarı motoru,
+  MeteoAlarm, radar, bağlantı yok senaryosu, önbellek, favoriler, taşma denetimi.
+- Her derlemede GERÇEK uygulama test edildi:
+  * Windows: exe öz-sınama modunda çalıştı, 13 veri kaynağı OK, 14 ekran görüntüsü.
+  * Android emülatör (API 34): APK kuruldu; izin isteği, izin reddi (şehir arama
+    ekranı), GPS ile açılış ve 18 ekran gerçek veriyle test edildi.
+  * Bağlantı yok: gerçek bağlantı hatası üretildi, eski veri gösterilmedi.
+- Raporlar ve tüm ekran görüntüleri: GitHub'da "builds" dalı.
+
+7) BİLİNEN SINIRLAR
+-------------------
+- Türkiye'de radar kapsaması çok az (kaynakta veri yok); Avrupa'da dolu.
+- Radar zoom 7'den sonra büyütülmüş görünür (ücretsiz katman sınırı).
+- Windows Setup.exe kod imzalı değil: SmartScreen uyarısında
+  "Ek bilgi -> Yine de çalıştır".
+- APK, kalıcı anahtar Secrets'a eklenene kadar geçici anahtarla imzalanıyor
+  (docs/KURULUM.md).
+- Ücretsiz veri katmanları ticari olmayan kullanım içindir.
+
+8) SÜREÇ
+--------
+1. Promptu okudum, veri kaynaklarını CI üzerinden gerçek isteklerle doğruladım.
+2. Mimariyi kurup veri katmanını test edilebilir yazdım.
+3. Android (gelişmiş) ve Windows (sade) arayüzlerini aynı kodla, farklı
+   düzenlerle kurdum.
+4. GitHub Actions ile her gönderimde analiz, test, derleme, emülatör ve
+   öz-sınama çalıştırdım; çıkan hataları (taşmalar, CARTO filigranı, bellek)
+   düzelttim.
+5. README, belgeler, sunum ve bu dosyayı hazırladım.
+
+SKYCAST — Furkan
